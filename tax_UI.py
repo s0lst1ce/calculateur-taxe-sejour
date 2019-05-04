@@ -13,11 +13,12 @@ def calc_tax(stay_price, stay_length, minor_count, adult_count):
 	per_adult_tax = (0.03*daily_price_per_capita)*(1.1)
 	if per_adult_tax>2.53:
 		per_adult_tax = 2.53
-
+	else:
+		per_adult_tax=int(per_adult_tax)
 	#calculating the full price of the tax for the stay
-	total_tax = adult_count*per_adult_tax
+	total_tax = int(adult_count*per_adult_tax)
 	print(total_tax, per_adult_tax)
-	return per_adult_tax, total_tax
+	return per_adult_tax, total_tax*stay_length
 
 def give_result():
 	#fetching user input
@@ -25,15 +26,33 @@ def give_result():
 	stay_length = stay_length_var.get()
 	minor_count = minor_count_var.get()
 	adult_count = adult_count_var.get()
-	if (stay_price or stay_length or minor_count or adult_count) == 0:
-		print("Missing at least one value")
-		return
+	#making sure values are legal
+	can_calc=True
+	if stay_price == 0:
+		stay_price_label["fg"] = "red"
+		can_calc=False
+	else: stay_price_label["fg"] = "black"
+
+	if stay_length ==0:
+		stay_length_label["fg"] = "red"
+		can_calc=False
+	else: stay_length_label["fg"] = "black"
+
+	if adult_count ==0:
+		adult_count_label["fg"] = "red"
+		can_calc=False
+	else: adult_count_label["fg"] = "black"
+
+	if can_calc==False:return
+
+
+
 	global total_tax_var
 	global per_adult_tax_var
 	print(total_tax_var.get(), per_adult_tax_var.get())
 	tax1, tax2 = calc_tax(stay_price, stay_length, minor_count, adult_count)
-	per_adult_tax_var.set(round(tax1, 2))
-	total_tax_var.set(round(tax2, 2))
+	per_adult_tax_var.set("{}€".format(tax1))
+	total_tax_var.set("{}€".format(tax2))
 	print(total_tax_var.get(), per_adult_tax_var.get())
 
 
@@ -54,15 +73,15 @@ stay_length_var= tk.IntVar()
 adult_count_var= tk.IntVar()
 minor_count_var = tk.IntVar()
 stay_price_var = tk.DoubleVar()
-per_adult_tax_var = tk.DoubleVar()
-total_tax_var = tk.DoubleVar()
+per_adult_tax_var = tk.StringVar()
+total_tax_var = tk.StringVar()
 #making labels
 stay_length_label = tk.Label(main_window, text="Durée du séjour")
 adult_count_label = tk.Label(main_window, text="Nombre d'adultes")
 minor_count_label = tk.Label(main_window, text="Nombre d'enfants")
-stay_price_label  = tk.Label(main_window, text="Prix du séjour")
+stay_price_label  = tk.Label(main_window, text="Prix du séjour", fg="black")
 per_adult_tax_name_label = tk.Label(main_window, text="Prix unitaire par jour")
-total_tax_name_label = tk.Label(main_window, text="Prix total par jour")
+total_tax_name_label = tk.Label(main_window, text="Prix total pour le séjour")
 per_adult_tax_label = tk.Label(main_window, textvariable=per_adult_tax_var)
 total_tax_label = tk.Label(main_window, textvariable=total_tax_var)
 #making entries
