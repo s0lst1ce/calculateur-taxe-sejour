@@ -13,6 +13,8 @@ def calc_tax(stay_price, stay_length, minor_count, adult_count):
 	per_adult_tax = (0.03*daily_price_per_capita)*(1.1)
 	if per_adult_tax>2.53:
 		per_adult_tax = 2.53
+
+	per_adult_tax = round(per_adult_tax, 2)
 	total_tax = adult_count*per_adult_tax
 	return per_adult_tax, total_tax*stay_length
 
@@ -64,10 +66,10 @@ main_window.grid_columnconfigure(0, weight=1)
 #DEFINING WIDGETS
 #title_label = tk.Label(main_window, text=TITLE)
 #defining stay vars
-stay_length_var= tk.IntVar(value=7)
-adult_count_var= tk.IntVar(value=10)
-minor_count_var = tk.IntVar(value=0)
-stay_price_var = tk.DoubleVar(value=1250)
+stay_length_var= tk.IntVar()
+adult_count_var= tk.IntVar()
+minor_count_var = tk.IntVar()
+stay_price_var = tk.DoubleVar()
 per_adult_tax_var = tk.StringVar()
 total_tax_var = tk.StringVar()
 #making labels
