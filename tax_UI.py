@@ -13,11 +13,7 @@ def calc_tax(stay_price, stay_length, minor_count, adult_count):
 	per_adult_tax = (0.03*daily_price_per_capita)*(1.1)
 	if per_adult_tax>2.53:
 		per_adult_tax = 2.53
-	#else:
-	#	per_adult_tax=int(per_adult_tax)
-	#calculating the full price of the tax for the stay
 	total_tax = adult_count*per_adult_tax
-	print(f"calc_tax returned {total_tax}, {per_adult_tax}")
 	return per_adult_tax, total_tax*stay_length
 
 def give_result():
