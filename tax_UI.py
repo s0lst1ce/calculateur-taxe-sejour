@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-#FUNTIONS
+#FUNCTIONS
 #calculation function
 def calc_tax(stay_price, stay_length, minor_count, adult_count):
 
@@ -13,11 +13,11 @@ def calc_tax(stay_price, stay_length, minor_count, adult_count):
 	per_adult_tax = (0.03*daily_price_per_capita)*(1.1)
 	if per_adult_tax>2.53:
 		per_adult_tax = 2.53
-	else:
-		per_adult_tax=int(per_adult_tax)
+	#else:
+	#	per_adult_tax=int(per_adult_tax)
 	#calculating the full price of the tax for the stay
-	total_tax = int(adult_count*per_adult_tax)
-	print(total_tax, per_adult_tax)
+	total_tax = adult_count*per_adult_tax
+	print(f"calc_tax returned {total_tax}, {per_adult_tax}")
 	return per_adult_tax, total_tax*stay_length
 
 def give_result():
@@ -26,6 +26,7 @@ def give_result():
 	stay_length = stay_length_var.get()
 	minor_count = minor_count_var.get()
 	adult_count = adult_count_var.get()
+	print(stay_price, stay_length, minor_count, adult_count)
 	#making sure values are legal
 	can_calc=True
 	if stay_price == 0:
@@ -44,8 +45,6 @@ def give_result():
 	else: adult_count_label["fg"] = "black"
 
 	if can_calc==False:return
-
-
 
 	global total_tax_var
 	global per_adult_tax_var
@@ -69,10 +68,10 @@ main_window.grid_columnconfigure(0, weight=1)
 #DEFINING WIDGETS
 #title_label = tk.Label(main_window, text=TITLE)
 #defining stay vars
-stay_length_var= tk.IntVar()
-adult_count_var= tk.IntVar()
-minor_count_var = tk.IntVar()
-stay_price_var = tk.DoubleVar()
+stay_length_var= tk.IntVar(value=7)
+adult_count_var= tk.IntVar(value=10)
+minor_count_var = tk.IntVar(value=0)
+stay_price_var = tk.DoubleVar(value=1250)
 per_adult_tax_var = tk.StringVar()
 total_tax_var = tk.StringVar()
 #making labels
